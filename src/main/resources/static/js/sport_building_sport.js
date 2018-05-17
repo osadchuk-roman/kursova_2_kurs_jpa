@@ -29,13 +29,13 @@ app.controller("AppCtrl", function ($http, $scope) {
 
 
             $http.get('/api/kind_of_sport').then(function (response){
-                var types = response.data;
+                var sport = response.data;
                 var selector = document.getElementById("Sport");
                 $(selector).empty();
-                for (var i = 0; i < types.length; i++) {
+                for (var i = 0; i < sport.length; i++) {
                     var option = document.createElement("option");
-                    option.text = types[i].name;
-                    option.value = types[i].id;
+                    option.text = sport[i].name;
+                    option.value = sport[i].id;
                     selector.add(option);
                 }
             });
@@ -51,8 +51,8 @@ app.controller("AppCtrl", function ($http, $scope) {
         var buildingID = document.getElementById("SportBuilding").options[indexOfSportBuilding].value;
 
 
-        var indexOfSport = document.getElementById("SportBuilding").selectedIndex;
-        var sportID = document.getElementById("SportBuilding").options[indexOfSport].value;
+        var indexOfSport = document.getElementById("Sport").selectedIndex;
+        var sportID = document.getElementById("Sport").options[indexOfSport].value;
 
         $http.get('/api/sport_building_sport/insert?sportBuildingId='+buildingID+'&sportId='+sportID).then(function (response){
             window.location.reload();

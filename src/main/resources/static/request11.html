@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Запит №11</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body ng-app = "kursova" style="margin: 15px">
+<div  style="margin-top: 30px" ng-controller = "AppCtrl as ctrl" ><!--class="container"-->
+    <!--<div class="row">
+        <div class="col-md12">-->
+    <div class="container-fluid"><!--<div class="panel panel-default">-->
+        <div class="datagrid" >
+            <table>
+                <tbody>
+                <tr>
+                    <th class="my-th" style="width: 50px">
+                        <a href="\request1_1.html" style="color: white">1.1</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request1_2.html" style="color: white">1.2</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request2_1.html" style="color: white">2.1</a>
+                    </th>
+                    <th class="my-th"style="width: 50px">
+                        <a href="\request2_2.html" style="color: white">2.2</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request3_1.html" style="color: white">3.1</a>
+                    </th>
+                    <th class="my-th"style="width: 50px">
+                        <a href="\request3_2.html" style="color: white">3.2</a>
+                    </th>
+                    <th class="my-th"style="width: 50px">
+                        <a href="\request3_3.html" style="color: white">3.3</a>
+                    </th>
+                    <th  class="my-th" style="width: 50px">
+                        <a href="\request4.html" style="color: white"> 4 </a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request5.html" style="color: white"> 5 </a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request11.html" style="color: white">6.1</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request6_2.html" style="color: white">6.2</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request7.html" style="color: white">7.1</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request7_2.html" style="color: white">7.2</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request8_1.html" style="color: white">8.1</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request8_2.html" style="color: white">8.2</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request9.html" style="color: white">9</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request10.html" style="color: white">10</a>
+                    </th>
+                    <th  class="my-th-selected"style="width: 50px">
+                        <a style="color: white">11</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request12.html" style="color: white">12</a>
+                    </th>
+                    <th  class="my-th"style="width: 50px">
+                        <a href="\request13.html" style="color: white">13</a>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-heading"> Перелік спортсменів, які протягом вказаного періоду не брали участь у жодному змаганні</div>
+        <div  style="font-size: 20px">
+            Початкова дата:
+            <input type="text" id="FirstDate" style="width: 80px">
+            </input>
+            <a>&ensp;</a>
+            Кінцева дата:
+            <input type="text" id="SecondDate"style="width: 80px">
+            </input>
+            <a>&ensp;</a>
+            <button  class="button-main" style="width: 90px; height: 30px; padding: 0px;font-size: 16px"
+                     ng-click="ctrl.update_request()">
+                Змінити
+            </button>
+            <br>
+        </div>
+        <div class="datagrid">
+
+            <table ><!--class="table table-striped"-->
+                <thead>
+                <tr>
+                    <th width="40px">Id</th>
+                    <th>П. І. Б.</th>
+                    <th>Вік</th>
+                    <th>Стать</th>
+                    <th>Спортивний клуб</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat = "item in request11">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.age}}</td>
+                    <td>{{item.gender}}</td>
+                    <td>{{item.sportClub.name}}</td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+
+    </div>
+    <!--  </div>
+  </div>-->
+</div>
+</body>
+
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/requests/request11.js"></script>
+
+
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>-->
+</html>
