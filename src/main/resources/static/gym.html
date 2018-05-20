@@ -10,9 +10,26 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body ng-app = "kursova">
-<div  style="margin-top: 30px" ng-controller = "AppCtrl as ctrl" ><!--class="container"-->
+<div  style="margin-top: 5px" ng-controller = "AppCtrl as ctrl" ><!--class="container"-->
     <!--<div class="row">
         <div class="col-md12">-->
+    <div   align="right"  class="div-navigation-panel">
+        <table>
+            <tbody >
+            <tr>
+                <th>
+                    <a href="\main.html" style="color: #7f6040;">Головна</a>
+                </th>
+                <th>
+                    <a style="color: #57c548;">Таблиці</a>
+                </th>
+                <th>
+                    <a href="\request1_1.html" style="color: #7f6040;">Запити</a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="container-fluid"><!--<div class="panel panel-default">-->
         <div class="datagrid">
             <table>
@@ -87,9 +104,9 @@
                     <th width="40px">Id</th>
                     <th>Спортивна споруда</th>
                     <!--<th>Id спортивної споруди</th>-->
-                    <th>Наявність<br>кардіо зони</th>
-                    <th>Наявність<br>кросфіт зони</th>
-                    <th>Наявність<br>боксерського рингу</th>
+                    <th>Наявність кардіо зони</th>
+                    <th>Наявність кросфіт зони</th>
+                    <th>Наявність боксерського рингу</th>
                     <th width="80px" style="padding-left: 9px">
                         <button type="button" class="btn-success" data-toggle="modal" data-target="#addModal"
                                 style="width: 60px;cursor:pointer" ng-click="ctrl.start_insert_gym()">

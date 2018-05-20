@@ -10,7 +10,7 @@ app.controller("AppCtrl", function ($http, $scope) {
         console.log(response);
         accessTime=performance.now()-accessTime;
         accessTime = Math.round(accessTime*100)/100;
-        window.alert('Час доступу до бази даних: '+accessTime+'мс');
+        console.log('Час доступу до бази даних: '+accessTime+'мс');
     });
     this.del_sportsman_competition= function del(id) {
         $http.get('/api/sportsman_competition/del?id='+id).then(function (response){
