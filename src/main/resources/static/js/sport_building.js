@@ -39,11 +39,21 @@ app.controller("AppCtrl", function ($http, $scope) {
         var phone = document.getElementById("Phone").value;
         var address = document.getElementById("Address").value;
 
-        $http.get('/api/sport_building/insert?name='+name+'&typeOfSportBuildingId='
-            +typeID+'&phone='+phone+'&address='+address).then(function (response){
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^0[0-9]{9}$/
+        if(!regex.test(phone)){
+            errorMessage=errorMessage+'-невірний формат телефонного номеру;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/sport_building/insert?name=' + name + '&typeOfSportBuildingId='
+                + typeID + '&phone=' + phone + '&address=' + address).then(function (response) {
                 window.location.reload();
                 window.alert('Спортивну будівлю було успішно додано!');
             });
+        }
+        else window.alert(errorMessage);
 
     };
     var thisId;
@@ -88,10 +98,19 @@ app.controller("AppCtrl", function ($http, $scope) {
         var phone = document.getElementById("PhoneUPD").value;
         var address = document.getElementById("AddressUPD").value;
 
-        $http.get('/api/sport_building/update?id='+thisId+'&name='+name+'&typeOfSportBuildingId='
-            +typeID+'&phone='+phone+'&address='+address).then(function (response){
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^0[0-9]{9}$/
+        if(!regex.test(phone)){
+            errorMessage=errorMessage+'-невірний формат телефонного номеру;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/sport_building/update?id=' + thisId + '&name=' + name + '&typeOfSportBuildingId='
+                + typeID + '&phone=' + phone + '&address=' + address).then(function (response) {
                 window.location.reload();
             });
-
+        }
+        else window.alert(errorMessage);
     };
 });

@@ -69,12 +69,27 @@ app.controller("AppCtrl", function ($http, $scope) {
         var capacity=document.getElementById("Capacity").value;
         var fieldArea=document.getElementById("FieldArea").value;
 
-        $http.get('/api/stadium/insert?sportBuildingId='+sportBuildingId+'&capacity='
-            +capacity+'&fieldArea='+fieldArea+'&pathForRunning='+path+'&gymnasticZone='+gymnastic).then(function (response){
-            window.location.reload();
-            window.alert('Стадіон було успішно додано!');
-        });
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[1-9][0-9]*$/;
+        if(!regex.test(capacity)){
+            errorMessage=errorMessage+'-невірний формат вмістимості стадіону;\n';
+            isValid=false;
+        }
 
+        if(!regex.test(fieldArea)){
+            errorMessage=errorMessage+'-невірний формат площі поля;';
+            isValid=false;
+        }
+        if(isValid){
+            $http.get('/api/stadium/insert?sportBuildingId='+sportBuildingId+'&capacity='
+                +capacity+'&fieldArea='+fieldArea+'&pathForRunning='+path+'&gymnasticZone='+gymnastic).then(function (response){
+                window.location.reload();
+                window.alert('Стадіон було успішно додано!');
+            });
+
+        }
+        else window.alert(errorMessage);
     };
     var thisId;
 
@@ -145,10 +160,24 @@ app.controller("AppCtrl", function ($http, $scope) {
         var fieldArea=document.getElementById("FieldAreaUPD").value;
 
 
-        $http.get('/api/stadium/update?id='+thisId+'&sportBuildingId='+sportBuildingId+'&capacity='
-            +capacity+'&fieldArea='+fieldArea+'&pathForRunning='+path+'&gymnasticZone='+gymnastic).then(function (response){
-            window.location.reload();
-        });
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[1-9][0-9]*$/;
+        if(!regex.test(capacity)){
+            errorMessage=errorMessage+'-невірний формат вмістимості стадіону;\n';
+            isValid=false;
+        }
 
+        if(!regex.test(fieldArea)){
+            errorMessage=errorMessage+'-невірний формат площі поля;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/stadium/update?id=' + thisId + '&sportBuildingId=' + sportBuildingId + '&capacity='
+                + capacity + '&fieldArea=' + fieldArea + '&pathForRunning=' + path + '&gymnasticZone=' + gymnastic).then(function (response) {
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 });

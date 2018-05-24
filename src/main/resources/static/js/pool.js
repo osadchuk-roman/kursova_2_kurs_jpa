@@ -41,11 +41,34 @@ app.controller("AppCtrl", function ($http, $scope) {
         var length = document.getElementById("Length").value;
         var maxHeight = document.getElementById("MaxHeight").value;
 
-        $http.get('/api/pool/insert?sportBuildingId='+sportBuildingId+'&depth='
-            +depth+'&width='+width+'&length='+length+'&maxHeight='+maxHeight).then(function (response){
-            window.location.reload();
-            window.alert('Басейн було успішно додано!');
-        });
+        var isValid=true;
+
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regex=/^[1-9][0-9]*$/;
+        if(!regex.test(width)){
+            errorMessage=errorMessage+'\n-невірний формат ширини;';
+            isValid=false;
+        }
+        if(!regex.test(length)){
+            errorMessage=errorMessage+'\n-невірний формат довжини;';
+            isValid=false;
+        }
+        if(!regex.test(depth)){
+            errorMessage=errorMessage+'\n-невірний формат висоти;';
+            isValid=false;
+        }
+        if(!regex.test(maxHeight)){
+            errorMessage=errorMessage+'\n-невірний формат максимальної висоти для стрибків у воду;';
+            isValid=false;
+        }
+        if(isValid){
+            $http.get('/api/pool/insert?sportBuildingId='+sportBuildingId+'&depth='
+                +depth+'&width='+width+'&length='+length+'&maxHeight='+maxHeight).then(function (response){
+                window.location.reload();
+                window.alert('Басейн було успішно додано!');
+            });
+        }
+        else window.alert(errorMessage);
 
     };
     var thisId;
@@ -82,11 +105,32 @@ app.controller("AppCtrl", function ($http, $scope) {
         var width = document.getElementById("WidthUPD").value;
         var length = document.getElementById("LengthUPD").value;
         var maxHeight = document.getElementById("MaxHeightUPD").value;
+        var isValid=true;
 
-        $http.get('/api/pool/update?id='+thisId+'&sportBuildingId='+sportBuildingId+'&depth='
-            +depth+'&width='+width+'&length='+length+'&maxHeight='+maxHeight).then(function (response){
-            window.location.reload();
-        });
-
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regex=/^[1-9][0-9]*$/;
+        if(!regex.test(width)){
+            errorMessage=errorMessage+'\n-невірний формат ширини;';
+            isValid=false;
+        }
+        if(!regex.test(length)){
+            errorMessage=errorMessage+'\n-невірний формат довжини;';
+            isValid=false;
+        }
+        if(!regex.test(depth)){
+            errorMessage=errorMessage+'\n-невірний формат висоти;';
+            isValid=false;
+        }
+        if(!regex.test(maxHeight)){
+            errorMessage=errorMessage+'\n-невірний формат максимальної висоти для стрибків у воду;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/pool/update?id=' + thisId + '&sportBuildingId=' + sportBuildingId + '&depth='
+                + depth + '&width=' + width + '&length=' + length + '&maxHeight=' + maxHeight).then(function (response) {
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 });

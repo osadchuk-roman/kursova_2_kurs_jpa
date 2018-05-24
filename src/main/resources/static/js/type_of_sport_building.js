@@ -17,15 +17,22 @@ app.controller("AppCtrl", function ($http, $scope) {
     };
     this.insert_type_of_sport_building = function add() {
         var name = document.getElementById("typeName").value;
-        // window.alert('Вид спорту "' + name + '" був успішно доданий!');
-        // window.location.reload();
-
-        $http.get('/api/type_of_sport_building/insert?name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            window.alert('Вид спортивної споруди був успішно доданий!');
-            window.location.reload();
-        });
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[А-Яа-яІі]+$/;
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви типу покриття;\n';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/type_of_sport_building/insert?name=' + name).then(function (response) {
+                //  $http.get('http://localhost:8080/api/students').then(function (response){
+                // $scope.students=response.data;
+                window.alert('Вид спортивної споруди був успішно доданий!');
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
     var thisId;
@@ -36,14 +43,20 @@ app.controller("AppCtrl", function ($http, $scope) {
     this.update_type_of_sport_building = function upd() {
         var name = document.getElementById("typeNameUPD").value;
 
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[А-Яа-яІі]+$/;
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви типу покриття;\n';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/type_of_sport_building/update?id=' + thisId + '&name=' + name).then(function (response) {
 
-        $http.get('/api/type_of_sport_building/update?id='+thisId+'&name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            //window.alert('Вид спорту "' + response.data.name + '" був успішно доданий!');
-            window.location.reload();
-        });
-        //window.location.reload();
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 });

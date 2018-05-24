@@ -9,23 +9,26 @@ app.controller("AppCtrl", function ($http, $scope) {
     });
     this.del_sport_category= function del(id) {
         $http.get('/api/sport_category/del?id='+id).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
             window.alert('Спортивну категорію було успішно видалено!');
             window.location.reload();
         });
     };
     this.insert_sport_category = function add() {
         var name = document.getElementById("Name").value;
-        // window.alert('Вид спорту "' + name + '" був успішно доданий!');
-        // window.location.reload();
-
-        $http.get('/api/sport_category/insert?name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            window.alert('Спортивну категорію було успішно додано!');
-            window.location.reload();
-        });
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[А-Яа-яІі\s]+$/
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви спортивного розряду;';
+            isValid=false;
+        }
+        if(isValid){
+            $http.get('/api/sport_category/insert?name='+name).then(function (response){
+                window.alert('Спортивну категорію було успішно додано!');
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
     var thisId;
@@ -35,15 +38,19 @@ app.controller("AppCtrl", function ($http, $scope) {
     };
     this.update_sport_category = function upd() {
         var name = document.getElementById("NameUPD").value;
-
-
-        $http.get('/api/sport_category/update?id='+thisId+'&name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            //window.alert('Вид спорту "' + response.data.name + '" був успішно доданий!');
-            window.location.reload();
-        });
-        //window.location.reload();
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[А-Яа-яІі\s]+$/
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви спортивного розряду;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/sport_category/update?id=' + thisId + '&name=' + name).then(function (response) {
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 });

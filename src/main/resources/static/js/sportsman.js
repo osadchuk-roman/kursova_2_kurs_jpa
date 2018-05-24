@@ -53,12 +53,26 @@ app.controller("AppCtrl", function ($http, $scope) {
         var indexOfGender = document.getElementById("Gender").selectedIndex;
         var gender = document.getElementById("Gender").options[indexOfGender].value;
         //var gender = document.getElementById("Gender").value;
-
-        $http.get('/api/sportsman/insert?name='+name+'&age='
-            +age+'&gender='+gender+'&sportClubId='+sportClubId).then(function (response){
-            window.location.reload();
-            window.alert('Спортсмена було успішно додано!');
-        });
+        var isValid=true;
+        var regex=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат прізвища та ініціалів спорстсмена;';
+            isValid=false;
+        }
+        var regex=/^[1-9][0-9]?$/;
+        if(!regex.test(age)){
+            errorMessage=errorMessage+'\n-невірний формат віку спорстсмена;';
+            isValid=false;
+        }
+        if (isValid){
+            $http.get('/api/sportsman/insert?name='+name+'&age='
+                +age+'&gender='+gender+'&sportClubId='+sportClubId).then(function (response){
+                window.location.reload();
+                window.alert('Спортсмена було успішно додано!');
+            });
+        }
+        else window.alert(errorMessage);
 
     };
     var thisId;
@@ -115,12 +129,27 @@ app.controller("AppCtrl", function ($http, $scope) {
         var indexOfGender = document.getElementById("GenderUPD").selectedIndex;
         var gender = document.getElementById("GenderUPD").options[indexOfGender].value;
         //var gender = document.getElementById("GenderUPD").value;
+        var isValid=true;
+        var regex=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат прізвища та ініціалів спорстсмена;';
+            isValid=false;
+        }
+        var regex=/^[1-9][0-9]?$/;
+        if(!regex.test(age)){
+            errorMessage=errorMessage+'\n-невірний формат віку спорстсмена;';
+            isValid=false;
+        }
+        if(isValid){
 
-        $http.get('/api/sportsman/update?id='+thisId+'&name='+name+'&age='
-            +age+'&gender='+gender+'&sportClubId='+sportClubId).then(function (response){
-            window.location.reload();
-            //window.alert('Спортсмена "' + response.data.name + '" було успішно додано!');
-        });
+            $http.get('/api/sportsman/update?id='+thisId+'&name='+name+'&age='
+                +age+'&gender='+gender+'&sportClubId='+sportClubId).then(function (response){
+                window.location.reload();
+                //window.alert('Спортсмена "' + response.data.name + '" було успішно додано!');
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 });

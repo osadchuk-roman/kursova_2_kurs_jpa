@@ -9,8 +9,6 @@ app.controller("AppCtrl", function ($http, $scope) {
     });
     this.del_sport_club= function del(id) {
         $http.get('/api/sport_club/del?id='+id).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
             window.alert('Спортивний клуб був успішно видалений!');
             window.location.reload();
         });
@@ -20,17 +18,26 @@ app.controller("AppCtrl", function ($http, $scope) {
         var adminName = document.getElementById("AdminName").value;
         var phone = document.getElementById("Phone").value;
         var address = document.getElementById("Address").value;
-        // window.alert('Вид спорту "' + name + '" був успішно доданий!');
-        // window.location.reload();
-
-        $http.get('/api/sport_club/insert?name='+name+'&adminName='+adminName+'&phone='+phone+'&address='+address)
-            .then(function (response){
-                //  $http.get('http://localhost:8080/api/students').then(function (response){
-                // $scope.students=response.data;
-                window.alert('Спортивний клуб було успішно додано!');
-                window.location.reload();
-            });
-
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        if(!regex.test(adminName)){
+            errorMessage=errorMessage+'-невірний формат прізвища та ініціалів адміністратора;\n';
+            isValid=false;
+        }
+        regex = /^0[0-9]{9}$/
+        if(!regex.test(phone)){
+            errorMessage=errorMessage+'-невірний формат телефонного номеру;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/sport_club/insert?name=' + name + '&adminName=' + adminName + '&phone=' + phone + '&address=' + address)
+                .then(function (response) {
+                    window.alert('Спортивний клуб було успішно додано!');
+                    window.location.reload();
+                });
+        }
+        else window.alert(errorMessage);
     };
     var thisId;
     this.start_update_sport_club = function upd(id,name,adminName,phone,address) {
@@ -46,15 +53,24 @@ app.controller("AppCtrl", function ($http, $scope) {
         var phone = document.getElementById("PhoneUPD").value;
         var address = document.getElementById("AddressUPD").value;
 
-
-        $http.get('/api/sport_club/update?id='+thisId+'&name='+name+'&adminName='+adminName+'&phone='+phone+'&address='+address)
-            .then(function (response){
-                //  $http.get('http://localhost:8080/api/students').then(function (response){
-                // $scope.students=response.data;
-                //window.alert('Вид спорту "' + response.data.name + '" був успішно доданий!');
-                window.location.reload();
-            });
-        //window.location.reload();
-
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        if(!regex.test(adminName)){
+            errorMessage=errorMessage+'-невірний формат прізвища та ініціалів адміністратора;\n';
+            isValid=false;
+        }
+        regex = /^0[0-9]{9}$/
+        if(!regex.test(phone)){
+            errorMessage=errorMessage+'-невірний формат телефонного номеру;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/sport_club/update?id=' + thisId + '&name=' + name + '&adminName=' + adminName + '&phone=' + phone + '&address=' + address)
+                .then(function (response) {
+                    window.location.reload();
+                });
+        }
+        else  window.alert(errorMessage);
     };
 });

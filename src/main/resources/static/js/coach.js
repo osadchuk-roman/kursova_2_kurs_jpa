@@ -34,11 +34,20 @@ app.controller("AppCtrl", function ($http, $scope) {
         var name = document.getElementById("Name").value;
         var indexOfSportClub = document.getElementById("SportClub").selectedIndex;
         var sportClubId = document.getElementById("SportClub").options[indexOfSportClub].value;
-
-        $http.get('/api/coach/insert?name='+name+'&sportClubId='+sportClubId).then(function (response){
-            window.location.reload();
-            window.alert('Тренера було успішно додано!');
-        });
+        var isValid=true;
+        var regex=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат прізвища та ініціалів тренера;';
+            isValid=false;
+        }
+        if(isValid){
+            $http.get('/api/coach/insert?name='+name+'&sportClubId='+sportClubId).then(function (response){
+                window.location.reload();
+                window.alert('Тренера було успішно додано!');
+            });
+        }
+        else  window.alert(errorMessage);
 
     };
     var thisId;
@@ -75,10 +84,19 @@ app.controller("AppCtrl", function ($http, $scope) {
         var sportClubId = document.getElementById("SportClubUPD").options[indexOfSportClub].value;
         //var gender = document.getElementById("GenderUPD").value;
 
-        $http.get('/api/coach/update?id='+thisId+'&name='+name+'&sportClubId='+sportClubId).then(function (response){
-            window.location.reload();
-            //window.alert('Спортсмена "' + response.data.name + '" було успішно додано!');
-        });
+        var isValid=true;
+        var regex=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат прізвища та ініціалів тренера;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/coach/update?id=' + thisId + '&name=' + name + '&sportClubId=' + sportClubId).then(function (response) {
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 });

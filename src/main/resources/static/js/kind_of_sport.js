@@ -20,28 +20,23 @@ app.controller("AppCtrl", function ($http, $scope) {
 
     this.insert_kind_of_sport = function add() {
         var name = document.getElementById("sportName").value;
-       // window.alert('Вид спорту "' + name + '" був успішно доданий!');
-       // window.location.reload();
-        /*var req = {
-            method: 'POST',
-            url: '/kind_of_sport/insert',
-            data: {
-                id:null,
-                name: name
-            }
-        };
-        console.log(req);
-        $http(req).then(function (resp) {
-            console.log(resp);
-            window.location.reload();
-        })*/
 
-        $http.get('/api/kind_of_sport/insert?name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            window.alert('Вид спорту був успішно доданий!');
-            window.location.reload();
-        });
+        var isValid=true;
+        var regex=/^([а-я]|[і])+$/ ;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви вида спорту;';
+            isValid=false;
+        }
+        if(isValid){
+            $http.get('/api/kind_of_sport/insert?name='+name).then(function (response){
+                //  $http.get('http://localhost:8080/api/students').then(function (response){
+                // $scope.students=response.data;
+                window.alert('Вид спорту був успішно доданий!');
+                window.location.reload();
+            });
+        }
+        else window.alert()
 
     };
     var idSport;
@@ -51,14 +46,22 @@ app.controller("AppCtrl", function ($http, $scope) {
     };
     this.update_kind_of_sport = function upd() {
         var name = document.getElementById("sportNameUPD").value;
-
-
-        $http.get('/api/kind_of_sport/update?id='+idSport+'&name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            //window.alert('Вид спорту "' + response.data.name + '" був успішно доданий!');
-            window.location.reload();
-        });
+        var isValid=true;
+        var regex=/^([а-я]|[і])+$/ ;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви вида спорту;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/kind_of_sport/update?id=' + idSport + '&name=' + name).then(function (response) {
+                //  $http.get('http://localhost:8080/api/students').then(function (response){
+                // $scope.students=response.data;
+                //window.alert('Вид спорту "' + response.data.name + '" був успішно доданий!');
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 });

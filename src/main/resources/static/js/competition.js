@@ -64,11 +64,21 @@ app.controller("AppCtrl", function ($http, $scope) {
         var indexOfSport = document.getElementById("Sport").selectedIndex;
         var sport = document.getElementById("Sport").options[indexOfSport].value;
 
-        $http.get('/api/competition/insert?name='+name+'&date='+date+'&organizerId='
-            +organizer+'&sportBuildingId='+sportBuilding+'&sportId='+sport).then(function (response){
-            window.location.reload();
-            window.alert('Змагання було успішно додано!');
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
+        if(!regex.test(date)){
+            errorMessage=errorMessage+'-невірний формат дати змагання;';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/competition/insert?name=' + name + '&date=' + date + '&organizerId='
+                + organizer + '&sportBuildingId=' + sportBuilding + '&sportId=' + sport).then(function (response) {
+                window.location.reload();
+                window.alert('Змагання було успішно додано!');
+            });
+        }
+        else window.alert(errorMessage);
 
     };
     var thisId;
@@ -134,11 +144,20 @@ app.controller("AppCtrl", function ($http, $scope) {
         var sportBuilding = document.getElementById("SportBuildingUPD").options[indexOfSportBuilding].value;
         var indexOfSport = document.getElementById("SportUPD").selectedIndex;
         var sport = document.getElementById("SportUPD").options[indexOfSport].value;
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
+        if(!regex.test(date)){
+            errorMessage=errorMessage+'-невірний формат дати змагання;';
+            isValid=false;
+        }
+        if(isValid) {
 
-        $http.get('/api/competition/update?id='+thisId+'&name='+name+'&date='+date+'&organizerId='
-            +organizer+'&sportBuildingId='+sportBuilding+'&sportId='+sport).then(function (response){
-            window.location.reload();
-        });
-
+            $http.get('/api/competition/update?id=' + thisId + '&name=' + name + '&date=' + date + '&organizerId='
+                + organizer + '&sportBuildingId=' + sportBuilding + '&sportId=' + sport).then(function (response) {
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 });

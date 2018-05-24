@@ -54,12 +54,26 @@ app.controller("AppCtrl", function ($http, $scope) {
         var width = document.getElementById("Width").value;
         var length = document.getElementById("Length").value;
 
-        $http.get('/api/court/insert?sportBuildingId='+sportBuildingId+'&typeOfCoverId='
-            +coverId+'&width='+width+'&length='+length).then(function (response){
-            window.location.reload();
-            window.alert('Корт було успішно додано!');
-        });
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex=/^[1-9][0-9]*(\.[0-9]+)|($)/;
+        if(!regex.test(width)){
+            errorMessage=errorMessage+'\n-невірний формат ширини;';
+            isValid=false;
 
+        }
+        if(!regex.test(length)){
+            errorMessage=errorMessage+'\n-невірний формат довжини;';
+            isValid=false;
+        }
+        if(isValid){
+            $http.get('/api/court/insert?sportBuildingId='+sportBuildingId+'&typeOfCoverId='
+                +coverId+'&width='+width+'&length='+length).then(function (response){
+                window.location.reload();
+                window.alert('Корт було успішно додано!');
+            });
+        }
+        else window.alert(errorMessage);
     };
     var thisId;
 
@@ -108,11 +122,28 @@ app.controller("AppCtrl", function ($http, $scope) {
 
         var length = document.getElementById("LengthUPD").value;
         var width = document.getElementById("WidthUPD").value;
-
-        $http.get('/api/court/update?id='+thisId+'&sportBuildingId='+sportBuildingId+'&typeOfCoverId='
-            +coverId+'&width='+width+'&length='+length).then(function (response){
-            window.location.reload();
-        });
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex=/^[1-9][0-9]*(\.[0-9]+)|($)/;
+        if(!regex.test(width)){
+            errorMessage=errorMessage+'\n-невірний формат ширини;';
+            isValid=false;
+            console.log(isValid);
+            console.log(width);
+        }
+        if(!regex.test(length)){
+            errorMessage=errorMessage+'\n-невірний формат довжини;';
+            isValid=false;
+            console.log(isValid);
+            console.log(length);
+        }
+        if(isValid) {
+            $http.get('/api/court/update?id=' + thisId + '&sportBuildingId=' + sportBuildingId + '&typeOfCoverId='
+                + coverId + '&width=' + width + '&length=' + length).then(function (response) {
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 });

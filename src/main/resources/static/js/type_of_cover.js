@@ -9,24 +9,27 @@ app.controller("AppCtrl", function ($http, $scope) {
     });
     this.del_type_of_cover= function del(id) {
         $http.get('/api/type_of_cover/del?id='+id).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
             window.alert('Вид поктриття  було успішно видалено!');
             window.location.reload();
         });
     };
     this.insert_type_of_cover = function add() {
         var name = document.getElementById("typeName").value;
-        // window.alert('Вид спорту "' + name + '" був успішно доданий!');
-        // window.location.reload();
 
-        $http.get('/api/type_of_cover/insert?name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            window.alert('Вид поктриття був успішно доданий!');
-            window.location.reload();
-        });
-
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[А-Яа-яІі]+$/;
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви типу покриття;\n';
+            isValid=false;
+        }
+        if(isValid){
+            $http.get('/api/type_of_cover/insert?name='+name).then(function (response){
+                window.alert('Вид поктриття був успішно доданий!');
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
     var thisId;
     this.start_update_type_of_cover = function upd(id,name) {
@@ -36,14 +39,19 @@ app.controller("AppCtrl", function ($http, $scope) {
     this.update_type_of_cover = function upd() {
         var name = document.getElementById("typeNameUPD").value;
 
-
-        $http.get('/api/type_of_cover/update?id='+thisId+'&name='+name).then(function (response){
-            //  $http.get('http://localhost:8080/api/students').then(function (response){
-            // $scope.students=response.data;
-            //window.alert('Вид спорту "' + response.data.name + '" був успішно доданий!');
-            window.location.reload();
-        });
-        //window.location.reload();
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var isValid=true;
+        var regex = /^[А-Яа-яІі]+$/;
+        if(!regex.test(name)){
+            errorMessage=errorMessage+'-невірний формат назви типу покриття;\n';
+            isValid=false;
+        }
+        if(isValid) {
+            $http.get('/api/type_of_cover/update?id=' + thisId + '&name=' + name).then(function (response) {
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 });
